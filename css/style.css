@@ -166,12 +166,6 @@ footer a {
   border: 2px solid #000;
 }
 
-
-.submenu:hover .dropdown {
-  display: block;
-}
-
-
 .menu-interno ul {
   list-style: none;
   display: flex;
@@ -192,6 +186,38 @@ footer a {
 .menu-interno a:hover {
   background: #000;
   color: #f5d10d;
+}
+
+/* menu celular*/
+@media (max-width: 768px) {
+
+  /* menú vertical */
+  .menu ul {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .menu ul li {
+    width: 100%;
+  }
+
+  /* submenú MOBILE */
+  .submenu .dropdown {
+    position: static;          /* vuelve al flujo */
+    width: 100%;
+    border: 2px solid #000;
+    margin-top: 10px;
+    display: none;             /* oculto por defecto */
+  }
+
+  .submenu.active .dropdown {
+    display: block;            /* aparece y empuja */
+  }
+
+  .submenu-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* Secciones */
