@@ -79,7 +79,7 @@
 </footer>
 
 <script>
-  // Función para cargar y mostrar preguntas desde localStorage
+ 
   function cargarPreguntas() {
     const preguntas = JSON.parse(localStorage.getItem('preguntas')) || [];
     const lista = document.getElementById('lista-preguntas');
@@ -90,7 +90,7 @@
       return;
     }
 
-    // Mostrar cada pregunta en una tarjeta
+  
     preguntas.forEach((pregunta, index) => {
       const card = document.createElement('div');
       card.className = 'card fade-in';
@@ -108,23 +108,22 @@
     });
   }
 
-  // Manejar el envío del formulario
+
   document.getElementById('form-pregunta').addEventListener('submit', (e) => {
     e.preventDefault(); // Evitar recarga de página
     const nombre = document.getElementById('nombre').value;
     const pregunta = document.getElementById('pregunta').value;
 
-    // Obtener preguntas existentes o crear array vacío
     const preguntas = JSON.parse(localStorage.getItem('preguntas')) || [];
     preguntas.push({ nombre, pregunta, respuestas: [] }); // Agregar nueva pregunta
     localStorage.setItem('preguntas', JSON.stringify(preguntas)); // Guardar en localStorage
 
-    // Limpiar formulario y recargar preguntas
+  
     document.getElementById('form-pregunta').reset();
     cargarPreguntas();
   });
 
-  // Función para agregar respuestas
+  
   function agregarRespuesta(index) {
     const respuestaTexto = document.getElementById(`respuesta-${index}`).value;
     if (!respuestaTexto.trim()) return; // No agregar si está vacío
@@ -133,12 +132,12 @@
     preguntas[index].respuestas.push(respuestaTexto);
     localStorage.setItem('preguntas', JSON.stringify(preguntas));
 
-    // Limpiar textarea y recargar
+   
     document.getElementById(`respuesta-${index}`).value = '';
     cargarPreguntas();
   }
 
-  // Cargar preguntas al iniciar la página
+  
   cargarPreguntas();
 </script>
 
