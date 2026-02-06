@@ -40,21 +40,25 @@
 </header>
 
 <section class="preguntas-section">
-
   <h2 class="titulo-pq">Preguntas y respuestas de la comunidad</h2>
 
   <!-- FORMULARIO PARA ENVIAR PREGUNTA -->
   <div class="card fade-in nueva-pregunta">
       <h3>Hacer una nueva pregunta</h3>
-      <form action="guardar_pregunta.php" method="post">
-          <input type="text" name="nombre" placeholder="Tu nombre" class="input" required>
-          <textarea name="pregunta" placeholder="Escribe tu pregunta aquí..." class="textarea" required></textarea>
+      <form id="form-pregunta">  <!-- Quitamos action y method, ya que usaremos JS -->
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" class="input" required>
+          <textarea id="pregunta" name="pregunta" placeholder="Escribe tu pregunta aquí..." class="textarea" required></textarea>
           <button type="submit" class="btn">Publicar Pregunta</button>
       </form>
   </div>
-  <h3 class="titulo-secundario">Preguntas de los usuarios</h3>
-</section>
 
+  <h3 class="titulo-secundario">Preguntas de los usuarios</h3>
+
+  <!-- Lista de preguntas publicadas (se llenará con JS) -->
+  <div id="lista-preguntas">
+    <p class="sin-preguntas">No hay preguntas aún. ¡Sé el primero en publicar!</p>
+  </div>
+</section>
 
 <footer>
   <div>
@@ -73,6 +77,70 @@
     <p>Políticas de privacidad</p>
   </div>
 </footer>
+
+<script>
+  // Función para cargar y mostrar preguntas desde localStorage
+  function cargarPreguntas() {
+    const preguntas = JSON.parse(localStorage.getItem('preguntas')) || [];
+    const lista = document.getElementById('lista-preguntas');
+    lista.innerHTML = ''; // Limpiar la lista
+
+    if (preguntas.length === 0) {
+      lista.innerHTML = '<p class="sin-preguntas">No hay preguntas aún. ¡Sé el primero en publicar!</p>';
+      return;
+    }
+
+    // Mostrar cada pregunta en una tarjeta
+    preguntas.forEach((pregunta, index) => {
+      const card = document.createElement('div');
+      card.className = 'card fade-in';
+      card.innerHTML = `
+        <h3 class="pregunta-titulo">${pregunta.pregunta}</h3>
+        <p class="autor">Por: ${pregunta.nombre}</p>
+        <div class="respuestas">
+          <p><strong>Respuestas:</strong></p>
+          <div id="respuestas-${index}">${pregunta.respuestas.map(r => `<div class="respuesta">${r}</div>`).join('')}</div>
+          <textarea id="respuesta-${index}" placeholder="Escribe una respuesta..." class="textarea"></textarea>
+          <button class="btn" onclick="agregarRespuesta(${index})">Responder</button>
+        </div>
+      `;
+      lista.appendChild(card);
+    });
+  }
+
+  // Manejar el envío del formulario
+  document.getElementById('form-pregunta').addEventListener('submit', (e) => {
+    e.preventDefault(); // Evitar recarga de página
+    const nombre = document.getElementById('nombre').value;
+    const pregunta = document.getElementById('pregunta').value;
+
+    // Obtener preguntas existentes o crear array vacío
+    const preguntas = JSON.parse(localStorage.getItem('preguntas')) || [];
+    preguntas.push({ nombre, pregunta, respuestas: [] }); // Agregar nueva pregunta
+    localStorage.setItem('preguntas', JSON.stringify(preguntas)); // Guardar en localStorage
+
+    // Limpiar formulario y recargar preguntas
+    document.getElementById('form-pregunta').reset();
+    cargarPreguntas();
+  });
+
+  // Función para agregar respuestas
+  function agregarRespuesta(index) {
+    const respuestaTexto = document.getElementById(`respuesta-${index}`).value;
+    if (!respuestaTexto.trim()) return; // No agregar si está vacío
+
+    const preguntas = JSON.parse(localStorage.getItem('preguntas')) || [];
+    preguntas[index].respuestas.push(respuestaTexto);
+    localStorage.setItem('preguntas', JSON.stringify(preguntas));
+
+    // Limpiar textarea y recargar
+    document.getElementById(`respuesta-${index}`).value = '';
+    cargarPreguntas();
+  }
+
+  // Cargar preguntas al iniciar la página
+  cargarPreguntas();
+</script>
 
 </body>
 </html>
