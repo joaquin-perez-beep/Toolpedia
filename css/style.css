@@ -15,7 +15,6 @@ body {
   max-width: 100%; /* evita desbordes que causan bordes blancos */
 }
 
-
 /* BOTONES DE LOGIN */
 .auth-buttons {
   display: flex;
@@ -165,23 +164,14 @@ footer a {
   left: 0;
   background: #f5d10d;
   border: 2px solid #000;
-  transition: opacity 0.3s ease, visibility 0.3s ease; 
-  /* Agrega transición suave */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 10;
 }
 
-/* Muestra al hacer hover */
+/* Muestra al hacer hover (desktop) */
 .submenu:hover .dropdown {
   opacity: 1;
   visibility: visible;
-}
-@media(max-width:768px){
-  .submenu .dropdown {
-    position: static;
-    opacity: 0;
-    visibility: hidden;
-    transition: none; /* Sin transición en móviles para evitar glitches */
-  }
 }
 
 .menu-interno ul {
@@ -226,7 +216,6 @@ footer a {
   margin-bottom: 10px;
   color: #fff;
 }
-
 
 .preguntas-section {
   background: #000;
@@ -344,9 +333,7 @@ footer a {
   font-size: 18px;
 }
 
-
 @media (max-width: 768px) {
-
   header {
     flex-direction: column;
     gap: 15px;
@@ -372,7 +359,11 @@ footer a {
     gap: 10px;
   }
 
-  .dropdown {
-    position: static;
+  /* Cambios para el submenú en móviles: oculto con display: none para no ocupar espacio */
+  .submenu .dropdown {
+    display: none;
+    flex-direction: column;
+    background: #f5d10d;
+    border: 2px solid #000;
   }
 }

@@ -57,6 +57,7 @@
     <p>Políticas de privacidad</p>
   </div>
 </footer>
+
 <script>
   // Función para detectar si es un dispositivo táctil (móvil/tablet)
   function isTouchDevice() {
@@ -69,16 +70,14 @@
     const link = submenu.querySelector('.submenu-btn');
 
     if (isTouchDevice()) {
-      // En móviles: toggle al hacer clic
+      // En móviles: toggle con display para no ocupar espacio cuando oculto
       link.addEventListener('click', (e) => {
         e.preventDefault(); // Evita que el enlace vaya a "#"
-        const isVisible = dropdown.style.opacity === '1';
-        dropdown.style.opacity = isVisible ? '0' : '1';
-        dropdown.style.visibility = isVisible ? 'hidden' : 'visible';
+        const isVisible = dropdown.style.display === 'flex';
+        dropdown.style.display = isVisible ? 'none' : 'flex';
       });
     } else {
-      // En desktop: hover ya maneja el despliegue, pero opcionalmente puedes agregar más lógica si quieres
-      // (El CSS ya lo cubre)
+      // En desktop: el CSS :hover maneja el despliegue con opacity/visibility
     }
   });
 </script>
