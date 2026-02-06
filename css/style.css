@@ -165,7 +165,9 @@ footer a {
   left: 0;
   background: #f5d10d;
   border: 2px solid #000;
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* Agrega transición suave */
+  transition: opacity 0.3s ease, visibility 0.3s ease; 
+  /* Agrega transición suave */
+  z-index: 10;
 }
 
 /* Muestra al hacer hover */
@@ -173,7 +175,14 @@ footer a {
   opacity: 1;
   visibility: visible;
 }
-
+@media(max-width:768px){
+  .submenu .dropdown {
+    position: static;
+    opacity: 0;
+    visibility: hidden;
+    transition: none; /* Sin transición en móviles para evitar glitches */
+  }
+}
 
 .menu-interno ul {
   list-style: none;

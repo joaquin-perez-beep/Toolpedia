@@ -58,15 +58,28 @@
   </div>
 </footer>
 <script>
+  // Función para detectar si es un dispositivo táctil (móvil/tablet)
+  function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
+
+  // Selecciona todos los submenús
   document.querySelectorAll('.submenu').forEach(submenu => {
-    submenu.addEventListener('mouseenter', () => {
-      submenu.querySelector('.dropdown').style.opacity = '1';
-      submenu.querySelector('.dropdown').style.visibility = 'visible';
-    });
-    submenu.addEventListener('mouseleave', () => {
-      submenu.querySelector('.dropdown').style.opacity = '0';
-      submenu.querySelector('.dropdown').style.visibility = 'hidden';
-    });
+    const dropdown = submenu.querySelector('.dropdown');
+    const link = submenu.querySelector('.submenu-btn');
+
+    if (isTouchDevice()) {
+      // En móviles: toggle al hacer clic
+      link.addEventListener('click', (e) => {
+        e.preventDefault(); // Evita que el enlace vaya a "#"
+        const isVisible = dropdown.style.opacity === '1';
+        dropdown.style.opacity = isVisible ? '0' : '1';
+        dropdown.style.visibility = isVisible ? 'hidden' : 'visible';
+      });
+    } else {
+      // En desktop: hover ya maneja el despliegue, pero opcionalmente puedes agregar más lógica si quieres
+      // (El CSS ya lo cubre)
+    }
   });
 </script>
 </body>
