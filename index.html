@@ -57,6 +57,17 @@
     <p>Políticas de privacidad</p>
   </div>
 </footer>
-
+<script>
+  document.querySelectorAll('.submenu').forEach(submenu => {
+    submenu.addEventListener('mouseenter', () => {
+      submenu.querySelector('.dropdown').style.opacity = '1';
+      submenu.querySelector('.dropdown').style.visibility = 'visible';
+    });
+    submenu.addEventListener('mouseleave', () => {
+      submenu.querySelector('.dropdown').style.opacity = '0';
+      submenu.querySelector('.dropdown').style.visibility = 'hidden';
+    });
+  });
+</script>
 </body>
 </html>

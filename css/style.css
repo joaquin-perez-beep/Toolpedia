@@ -155,20 +155,23 @@ footer a {
   position: relative;
 }
 
-/* Oculto */
+/* Oculto inicialmente */
 .submenu .dropdown {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
   flex-direction: column;
   position: absolute;
   top: 100%;
   left: 0;
   background: #f5d10d;
   border: 2px solid #000;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Agrega transición suave */
 }
 
-
+/* Muestra al hacer hover */
 .submenu:hover .dropdown {
-  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 
